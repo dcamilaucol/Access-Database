@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb; //Agregamos esta libreria
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Access_Database
 {
@@ -40,8 +41,37 @@ namespace Access_Database
             cmd.ExecuteNonQuery();
             conn.Close();
             MessageBox.Show("Registro exitosamente guardado.");
-            //LimpiarTexto();
+            LimpiarTexto();
             LlenarGrid();
+        }
+        void LimpiarTexto()
+        {
+            textBox1.Text = "";
+            textBox2.Text = "";
+            textBox3.Text = "";
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            conn.Open();
+            OleDbCommand cmd = new OleDbCommand("delete from TablaPersona where Id=" + textBox1.Text + " ", conn);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            MessageBox.Show("Registro eliminado.");
+            LimpiarTexto();
+            LlenarGrid();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            conn.Open();
+            OleDbCommand cmd = new OleDbCommand("update TablaPersona set Nombre='" + textBox2.Text + "', Edad=" + textBox3.Text + " where Id=" + textBox1.Text + " ", conn);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            MessageBox.Show("Registro actualizado.");
+            LimpiarTexto();
+            LlenarGrid();
+
         }
     }
 }
